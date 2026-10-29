@@ -1,0 +1,13 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4" y="4" width="120" height="120" rx="24" fill="#1F2430"/>
+  <rect x="5" y="5" width="118" height="118" rx="23" fill="none" stroke="#3C4657" stroke-width="2"/>
+  <rect x="18" y="26" width="54" height="46" rx="6" fill="#2E3646" stroke="#5B6C8C" stroke-width="2"/>
+  <path d="M32 40l-9 9 9 9" fill="none" stroke="#7FD1FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M58 40l9 9-9 9" fill="none" stroke="#7FD1FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="26" y1="62" x2="46" y2="62" stroke="#5B6C8C" stroke-width="3" stroke-linecap="round"/>
+  <path d="M74 49h16" stroke="#F0B458" stroke-width="4" stroke-linecap="round"/>
+  <path d="M84 41l10 8-10 8" fill="none" stroke="#F0B458" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="38" y="70" width="72" height="42" rx="8" fill="#12161E" stroke="#F0B458" stroke-width="2"/>
+  <path d="M50 82l9 8-9 8" fill="none" stroke="#8BE6A8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="68" y="86" width="10" height="14" rx="2" fill="#F0B458"/>
+</svg>

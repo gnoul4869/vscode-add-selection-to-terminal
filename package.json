@@ -1,0 +1,164 @@
+{
+  "name": "add-selection-to-terminal",
+  "publisher": "gnoul4869",
+  "displayName": "Add Selection to Terminal",
+  "description": "Send editor selections into the integrated terminal as LLM-friendly context blocks: @path:lines plus a fenced snippet.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnoul4869/vscode-add-selection-to-terminal.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "AI"
+  ],
+  "keywords": [
+    "terminal",
+    "selection",
+    "context",
+    "prompt",
+    "llm",
+    "ai",
+    "agent"
+  ],
+  "main": "./src/extension.js",
+  "icon": "resources/icon.png",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "addSelectionToTerminal.send",
+        "title": "Add Selection to Terminal"
+      },
+      {
+        "command": "addSelectionToTerminal.stage",
+        "title": "Stage Selection (Add to Pending Context)"
+      },
+      {
+        "command": "addSelectionToTerminal.sendStaged",
+        "title": "Send Staged Context to Terminal"
+      },
+      {
+        "command": "addSelectionToTerminal.clearStaged",
+        "title": "Clear Staged Context"
+      },
+      {
+        "command": "addSelectionToTerminal.copy",
+        "title": "Copy Selection as Context Block"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "addSelectionToTerminal.send",
+          "group": "2_context@1",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "addSelectionToTerminal.stage",
+          "group": "2_context@2",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "addSelectionToTerminal.copy",
+          "group": "2_context@3",
+          "when": "editorHasSelection"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "addSelectionToTerminal.send",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "addSelectionToTerminal.stage",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "addSelectionToTerminal.copy",
+          "when": "editorHasSelection"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Add Selection to Terminal",
+      "properties": {
+        "addSelectionToTerminal.pathStyle": {
+          "type": "string",
+          "enum": [
+            "relative",
+            "absolute"
+          ],
+          "default": "relative",
+          "description": "Path written in the block header. Relative paths match how terminal agents resolve files; absolute is unambiguous outside a workspace."
+        },
+        "addSelectionToTerminal.lineNumbers": {
+          "type": "string",
+          "enum": [
+            "range",
+            "start",
+            "none"
+          ],
+          "default": "range",
+          "description": "Line info in the header: \"range\" -> @src/a.py:29-31, \"start\" -> @src/a.py:29, \"none\" -> @src/a.py."
+        },
+        "addSelectionToTerminal.languageFence": {
+          "type": "boolean",
+          "default": true,
+          "description": "Wrap the snippet in a fenced code block tagged with the language, e.g. ```python."
+        },
+        "addSelectionToTerminal.lineGutter": {
+          "type": "boolean",
+          "default": false,
+          "description": "Prefix every snippet line with its line number (\"29 | code\"). Helps the model cite lines, but the snippet is no longer copy-pasteable."
+        },
+        "addSelectionToTerminal.maxSnippetLines": {
+          "type": "number",
+          "default": 400,
+          "minimum": 0,
+          "description": "Cap the snippet at this many lines (0 = no limit). Omitted lines are announced inside the block."
+        },
+        "addSelectionToTerminal.preamble": {
+          "type": "string",
+          "default": "",
+          "description": "Optional text prepended to the message, e.g. \"Code I am referring to:\"."
+        },
+        "addSelectionToTerminal.delivery": {
+          "type": "string",
+          "enum": [
+            "bracketedPaste",
+            "plain",
+            "clipboard"
+          ],
+          "default": "bracketedPaste",
+          "description": "bracketedPaste: writes the block wrapped in bracketed-paste sequences, so multi-line text is inserted instead of executed (needs a program in the terminal that supports it, e.g. pi, Claude Code, bash, zsh). plain: raw keystrokes, newlines submit. clipboard: copy then paste (VS Code adds bracketed paste itself, but overwrites your clipboard)."
+        },
+        "addSelectionToTerminal.submit": {
+          "type": "boolean",
+          "default": false,
+          "description": "Press Enter after the block so the agent starts immediately. Off by default so you can review or add a question first."
+        },
+        "addSelectionToTerminal.terminalName": {
+          "type": "string",
+          "default": "AI Context",
+          "description": "Name of the terminal created when no terminal is open yet."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "vsce package --no-dependencies",
+    "install-local": "vsce package --no-dependencies && code --install-extension add-selection-to-terminal-*.vsix --force",
+    "icon": "node scripts/make-icon.js",
+    "prepackage": "node scripts/make-icon.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.1"
+  }
+}
